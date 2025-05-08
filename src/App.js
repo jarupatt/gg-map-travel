@@ -21,6 +21,8 @@ const App = () => {
     const [type, setType] = useState("restaurants");
     const [rating, setRating] = useState("");
 
+    const [cuisine, setCuisine] = useState([]);
+
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(
             ({ coords: { latitude, longitude } }) => {
@@ -30,9 +32,26 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        const filteredPlaces = places.filter((place) => place.rating > rating);
-        setFilteredPlaces(filteredPlaces);
-    }, [rating]);
+        const selectedCuisines = Array.isArray(cuisine)
+            ? cuisine.map((c) => String(c.value || c).toLowerCase())
+            : [];
+
+        const filtered = places.filter((place) => {
+            const matchesRating = place.rating >= rating;
+            const matchesCuisine = selectedCuisines.length
+                ? place.types?.some(
+                      (t) =>
+                          typeof t === "string" &&
+                          selectedCuisines.some((sc) => t.includes(sc))
+                  )
+                : true;
+
+            return matchesRating && matchesCuisine;
+        });
+        console.log("Filtered places:", filtered);
+
+        setFilteredPlaces(filtered);
+    }, [places, rating, cuisine]);
 
     useEffect(() => {
         if (bounds.sw && bounds.ne) {
@@ -53,7 +72,6 @@ const App = () => {
             });
         }
     }, [type, bounds]);
-
     // console.log(places);
     // console.log(filteredPlaces);
 
@@ -71,6 +89,8 @@ const App = () => {
                         setType={setType}
                         rating={rating}
                         setRating={setRating}
+                        cuisine={cuisine}
+                        setCuisine={setCuisine}
                     />
                 </Grid>
                 <Grid item xs={12} md={8}>

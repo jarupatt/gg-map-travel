@@ -13,7 +13,7 @@ import PlaceDetails from "../PlaceDetails/PlaceDetails";
 
 import useStyles from "./styles";
 
-const List = ({ places, childClicked, isLoading, type, setType, rating, setRating }) => {
+const List = ({ places, childClicked, isLoading, type, setType, rating, setRating, cuisine, setCuisine }) => {
     const classes = useStyles();
     const [elRefs, setElRefs] = useState([]);
 
@@ -59,6 +59,16 @@ const List = ({ places, childClicked, isLoading, type, setType, rating, setRatin
                             <MenuItem value={3}>Above 3.0</MenuItem>
                             <MenuItem value={4}>Above 4.0</MenuItem>
                             <MenuItem value={4.5}>Above 4.5</MenuItem>
+                        </Select>
+                        <Select
+                            value={cuisine}
+                            onChange={(e) => {
+                                setCuisine(e.target.value);
+                            }}
+                        >
+                            <MenuItem value="italy">Italy</MenuItem>
+                            <MenuItem value="thai">Thai</MenuItem>
+                            <MenuItem value="japanese">Japanese</MenuItem>
                         </Select>
                     </FormControl>
                     <Grid container spacing={3} className={classes.list}>

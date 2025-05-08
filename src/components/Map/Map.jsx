@@ -8,10 +8,16 @@ import useStyles from "./styles";
 
 import mapStyles from "./mapStyles";
 
-const Map = ({ setCoordinates, setBounds, coordinates, places, setChildClicked, weatherData }) => {
+const Map = ({
+    setCoordinates,
+    setBounds,
+    coordinates,
+    places,
+    setChildClicked,
+    weatherData,
+}) => {
     const classes = useStyles();
     const isDesktop = useMediaQuery("(min-width:600px)");
-    
 
     return (
         <div className={classes.mapContainer}>
@@ -59,22 +65,23 @@ const Map = ({ setCoordinates, setBounds, coordinates, places, setChildClicked, 
                                     src={
                                         place.photo
                                             ? place.photo.images.large.url
-                                            : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
+                                            : "https://res.klook.com/image/upload/c_fill,w_750,ar_16:9,q_auto/activities/ivtizrfcye0uvxyzceiy.webp"
                                     }
                                     alt={place.name}
                                 />
-                                <Rating size="small" value={Number(place.rating)} readOnly />
+                                <Rating
+                                    size="small"
+                                    value={Number(place.rating)}
+                                    readOnly
+                                />
                             </Paper>
                         )}
                     </div>
                 ))}
                 {weatherData?.list?.map((data, index) => (
-                    <div
-                        key={index}
-                        lat={data.coord.lat}
-                        lng={data.coord.lon}
-                    >
-                        <img height={100}
+                    <div key={index} lat={data.coord.lat} lng={data.coord.lon}>
+                        <img
+                            height={100}
                             src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}
                             alt={data.weather[0].description}
                         />

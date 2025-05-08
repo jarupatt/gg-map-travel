@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Box,
     Typography,
@@ -8,18 +8,25 @@ import {
     CardContent,
     CardActions,
     Chip,
+    IconButton,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Rating from "@mui/material/Rating";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import useStyles from "./styles";
 import { PlaceSharp } from "@mui/icons-material";
 
 const PlaceDetails = ({ place, selected, refProp }) => {
     const classes = useStyles();
+    const [liked, setLiked] = useState(false);
 
-    if (selected) refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (selected)
+        refProp?.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
 
     return (
         <Card elevation={6}>
@@ -28,7 +35,7 @@ const PlaceDetails = ({ place, selected, refProp }) => {
                 image={
                     place.photo
                         ? place.photo.images.large.url
-                        : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
+                        : "https://res.klook.com/image/upload/c_fill,w_750,ar_16:9,q_auto/activities/ivtizrfcye0uvxyzceiy.webp"
                 }
                 title={place.name}
             />
@@ -113,6 +120,13 @@ const PlaceDetails = ({ place, selected, refProp }) => {
                     >
                         Website
                     </Button>
+                    <IconButton
+                        size="small"
+                        color={liked ? "secondary" : "default"}
+                        onClick={() => setLiked(!liked)}
+                    >
+                        <FavoriteBorderIcon />
+                    </IconButton>
                 </CardActions>
             </CardContent>
         </Card>
